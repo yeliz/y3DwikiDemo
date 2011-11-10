@@ -31,10 +31,8 @@ package
 		
 		public function wikiToon()
 		{
-			super();
-			
 			m_resourceManager = new ResourceManager();
-			
+			super();	
 		}
 		
 	

@@ -30,9 +30,8 @@ package
 		
 		public function wikiEnvMapDiffuseTexture()
 		{
-			super();
-			
 			m_resourceManager = new ResourceManager();
+			super();
 			
 		}
 	

@@ -33,10 +33,8 @@ package
 		
 		public function wikiSpecularFill()
 		{
-			super();
-			
 			m_resourceManager = new ResourceManager();
-			
+			super();
 		}
 		
 		public function createLights():void{

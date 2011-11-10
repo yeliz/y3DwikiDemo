@@ -27,11 +27,10 @@ package
 		private var m_sceneObject		:SceneObjectRenderable;
 		
 		public function wikiBitmap()
-		{
-			super();
-			
+		{	
 			m_resourceManager = new ResourceManager();
 			
+			super();	
 		}
 		
 		public function createLights():void{

@@ -36,11 +36,9 @@ package
 		private var m_sceneObject		:SceneObjectRenderable;
 		
 		public function wikiEmptyContour()
-		{
-			super();
-			
+		{	
 			m_resourceManager = new ResourceManager();
-			
+			super();
 		}
 		
 		public function createLights():void{

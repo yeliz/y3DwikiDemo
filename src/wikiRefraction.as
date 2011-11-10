@@ -32,9 +32,8 @@ package
 		
 		public function wikiRefraction()
 		{
-			super();
-			
 			m_resourceManager = new ResourceManager();
+			super();
 			
 		}
 		

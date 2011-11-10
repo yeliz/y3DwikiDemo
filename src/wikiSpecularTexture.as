@@ -32,9 +32,8 @@ package
 		
 		public function wikiSpecularTexture()
 		{
-			super();
-			
 			m_resourceManager = new ResourceManager();
+			super();
 			
 		}
 		

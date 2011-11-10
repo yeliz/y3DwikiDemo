@@ -30,9 +30,8 @@ package
 		
 		public function wikiHalfLambert()
 		{
-			super();
-			
 			m_resourceManager = new ResourceManager();
+			super();
 			
 		}
 		

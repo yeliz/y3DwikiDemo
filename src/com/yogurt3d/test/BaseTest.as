@@ -23,7 +23,7 @@ package com.yogurt3d.test
 	{
 		private var 	m_camera		:Camera;
 		private var 	m_scene		:Scene;
-		private var 	m_viewport	:Sprite;;
+		private var 	m_viewport	:Sprite;
 		protected var 	m_textField	:TextField;
 		private var 	m_context		:Context;
 		
@@ -31,48 +31,50 @@ package com.yogurt3d.test
 		
 		public function BaseTest()
 		{
-			Yogurt3D.instance.addEventListener( Yogurt3DEvent.READY, onContext3DReady );
-			Yogurt3D.instance.init(stage);
+			//Yogurt3D.instance.addEventListener( Yogurt3DEvent.READY, onContext3DReady );
+			//Yogurt3D.instance.init();
 			
 			stage.align = StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
+			
+			onContext3DReady(null);
 		}
 		
 		public function get context():Context
 		{
 			return m_context;
 		}
-
+		
 		public function set context(value:Context):void
 		{
 			m_context = value;
 		}
-
+		
 		public function get viewport():Sprite
 		{
 			return m_viewport;
 		}
-
+		
 		public function set viewport(value:Sprite):void
 		{
 			m_viewport = value;
 		}
-
+		
 		public function get scene():Scene
 		{
 			return m_scene;
 		}
-
+		
 		public function set scene(value:Scene):void
 		{
 			m_scene = value;
 		}
-
+		
 		public function get camera():Camera
 		{
 			return m_camera;
 		}
-
+		
 		public function set camera(value:Camera):void
 		{
 			if( m_camera != null )
@@ -85,7 +87,7 @@ package com.yogurt3d.test
 			m_scene.addChild( m_camera );
 		}
 		private function updateCamera():void{
-			Yogurt3D.instance.defaultCamera.setProjectionPerspective( 45, stage.stageWidth/stage.stageHeight,0.1,10000);
+			Yogurt3D.instance.defaultCamera.frustum.setProjectionPerspective(45, stage.stageWidth/stage.stageHeight,0.1,10000);
 		}
 		protected function onContext3DReady(event:Event):void
 		{

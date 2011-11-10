@@ -31,9 +31,8 @@ package
 		
 		public function wikiToonTexture()
 		{
-			super();
-			
 			m_resourceManager = new ResourceManager();
+			super();
 			
 		}
 		

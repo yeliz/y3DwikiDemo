@@ -31,10 +31,8 @@ package
 		
 		public function wikiDiffuseFill()
 		{
-			super();
-			
 			m_resourceManager = new ResourceManager();
-			
+			super();
 		}
 		
 

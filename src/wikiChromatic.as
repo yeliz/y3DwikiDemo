@@ -32,9 +32,10 @@ package
 		
 		public function wikiChromatic()
 		{
-			super();
+			
 			
 			m_resourceManager = new ResourceManager();
+			super();
 			
 		}
 		

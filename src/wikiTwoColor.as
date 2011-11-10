@@ -32,9 +32,8 @@ package
 		
 		public function wikiTwoColor()
 		{
-			super();
-			
 			m_resourceManager = new ResourceManager();
+			super();
 			
 		}
 		

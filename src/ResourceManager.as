@@ -328,12 +328,12 @@ package
 		public function setDefaultCamera(_camera:Camera):void{
 		
 			// set camera projection
-			_camera.setProjectionPerspective( 35, 800/600, 1, 7000);
+			_camera.frustum.setProjectionPerspective( 35, 800/600, 1, 7000);
 			
 			//CameraController.moveRatio = 1;
 			// setup default camera pos
 			TargetCamera(_camera).dist 				= 3.0;
-			TargetCamera(_camera).rotY 				= 180;
+			TargetCamera(_camera).rotY 				= 210;
 			TargetCamera(_camera).rotX 				= -30;
 			TargetCamera(_camera).limitEnabled 		= true;
 			TargetCamera(_camera).limitRotXMin 		= -30;

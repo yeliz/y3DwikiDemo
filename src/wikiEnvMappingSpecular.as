@@ -33,9 +33,8 @@ package
 		
 		public function wikiEnvMappingSpecular()
 		{
-			super();
-			
 			m_resourceManager = new ResourceManager();
+			super();
 			
 		}
 			

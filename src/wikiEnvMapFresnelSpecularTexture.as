@@ -39,9 +39,8 @@ package
 		
 		public function wikiEnvMapFresnelSpecularTexture()
 		{
-			super();
-			
 			m_resourceManager = new ResourceManager();
+			super();
 			
 		}
 			

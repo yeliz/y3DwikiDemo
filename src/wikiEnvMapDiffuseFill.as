@@ -32,9 +32,8 @@ package
 		
 		public function wikiEnvMapDiffuseFill()
 		{
-			super();
-			
 			m_resourceManager = new ResourceManager();
+			super();
 			
 		}
 		

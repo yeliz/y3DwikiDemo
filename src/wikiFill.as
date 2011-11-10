@@ -31,9 +31,8 @@ package
 		
 		public function wikiFill()
 		{
-			super();
-			
 			m_resourceManager = new ResourceManager();
+			super();
 			
 		}
 		

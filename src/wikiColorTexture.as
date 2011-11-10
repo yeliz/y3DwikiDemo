@@ -32,9 +32,8 @@ package
 		
 		public function wikiColorTexture()
 		{
-			super();
-			
 			m_resourceManager = new ResourceManager();
+			super();
 			
 		}
 		

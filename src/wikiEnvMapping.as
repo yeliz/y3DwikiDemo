@@ -37,9 +37,8 @@ package
 		
 		public function wikiEnvMapping()
 		{
-			super();
-			
 			m_resourceManager = new ResourceManager();
+			super();
 			
 		}
 		

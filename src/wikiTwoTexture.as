@@ -31,10 +31,8 @@ package
 		
 		public function wikiTwoTexture()
 		{
-			super();
-			
 			m_resourceManager = new ResourceManager();
-			
+			super();	
 		}	
 		
 		public function createLights():void{

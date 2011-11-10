@@ -32,9 +32,8 @@ package
 		
 		public function wikiEnvMapFresnel()
 		{
-			super();
-			
 			m_resourceManager = new ResourceManager();
+			super();
 			
 		}
 		

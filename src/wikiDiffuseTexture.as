@@ -38,9 +38,8 @@ package
 		
 		public function wikiDiffuseTexture()
 		{
-			super();
-			
 			m_resourceManager = new ResourceManager();
+			super();
 			
 		}
 		

@@ -32,9 +32,8 @@ package
 		
 		public function wikiSpecularFillVertex()
 		{
-			super();
-			
 			m_resourceManager = new ResourceManager();
+			super();
 			
 		}
 		

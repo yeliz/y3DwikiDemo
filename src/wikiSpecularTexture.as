@@ -60,11 +60,13 @@ package
 				m_sceneObject 				= m_resourceManager.getObject();
 				
 				m_sceneObject.material =  new MaterialSpecularTexture(getMap("colorMap"));
-				(m_sceneObject.material as MaterialSpecularTexture).shininess = 5;
+				(m_sceneObject.material as MaterialSpecularTexture).shininess = 30;
+//				m_sceneObject.material.ambientColor.a = 0.9;
 				
 				scene.addChild(m_resourceManager.getPlane());
 				scene.addChild(m_sceneObject);
 				scene.addChild(m_resourceManager.getStaticObj());
+				scene.addChild(m_resourceManager.getAO());
 				if(m_resourceManager.includeUI)
 					createUI();
 				

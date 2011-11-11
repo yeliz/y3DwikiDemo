@@ -65,6 +65,7 @@ package
 				scene.addChild(m_resourceManager.getPlane());
 				scene.addChild(m_sceneObject);
 				scene.addChild(m_resourceManager.getStaticObj());
+				scene.addChild(m_resourceManager.getAO());
 				
 				CameraController.moveRatio = m_resourceManager.moveRatio;
 				createLights();

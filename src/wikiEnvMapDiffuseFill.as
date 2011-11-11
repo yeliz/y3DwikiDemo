@@ -60,11 +60,13 @@ package
 				
 				m_sceneObject 				= m_resourceManager.getObject();
 				
-				m_sceneObject.material = new MaterialEnvMapDiffuseFill(m_resourceManager.envMap, 0xFF0000, null, null, 0.3);
+				m_sceneObject.material = new MaterialEnvMapDiffuseFill(m_resourceManager.envMap, 0x97AF22, null, null, 0.3);
+				m_sceneObject.material.ambientColor.a = 0.5;
 				
 				scene.addChild(m_resourceManager.getPlane());
 				scene.addChild(m_sceneObject);
 				scene.addChild(m_resourceManager.getStaticObj());
+				scene.addChild(m_resourceManager.getAO());
 				
 				if(m_resourceManager.includeUI)
 					createUI();
@@ -140,7 +142,7 @@ package
 			alphaS.value = MaterialEnvMapDiffuseFill(m_sceneObject.material).alpha;
 			
 			new Label(window, 5, 100,"Color");
-			var colorChooser:ColorChooser = new ColorChooser( window, 5, 115, 0xFF0000, function(_e:Event):void{
+			var colorChooser:ColorChooser = new ColorChooser( window, 5, 115, 0x97AF22, function(_e:Event):void{
 				MaterialEnvMapDiffuseFill(m_sceneObject.material).color =  colorChooser.value;
 			});
 			colorChooser.usePopup = true;

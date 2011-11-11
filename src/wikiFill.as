@@ -61,11 +61,12 @@ package
 				
 				m_sceneObject 				= m_resourceManager.getObject();
 				
-				m_sceneObject.material =  new MaterialFill(0xFF0000);
+				m_sceneObject.material =  new MaterialFill(0x9D3844);
 				
 				scene.addChild(m_resourceManager.getPlane());
 				scene.addChild(m_sceneObject);
 				scene.addChild(m_resourceManager.getStaticObj());
+				scene.addChild(m_resourceManager.getAO());
 				
 				CameraController.moveRatio = m_resourceManager.moveRatio;
 				createLights();
@@ -112,7 +113,7 @@ package
 			
 			
 			new Label(window, 5, 45,"Fill Color");
-			colorChooser = new ColorChooser( window, 5, 65, 0xFFFFFF, function(_e:Event):void{
+			colorChooser = new ColorChooser( window, 5, 65, 0x9D3844, function(_e:Event):void{
 				MaterialFill(m_sceneObject.material).color =  colorChooser.value;
 			});
 			colorChooser.usePopup = true;

@@ -60,12 +60,13 @@ package
 				
 				m_sceneObject 				= m_resourceManager.getObject();
 				
-				m_sceneObject.material =  new MaterialDiffuseFill();
-				
+				m_sceneObject.material =  new MaterialDiffuseFill(0xBD7589);
+				m_sceneObject.material.ambientColor.a = 0.5;
 				
 				scene.addChild(m_resourceManager.getPlane());
 				scene.addChild(m_sceneObject);
 				scene.addChild(m_resourceManager.getStaticObj());
+				scene.addChild(m_resourceManager.getAO());
 				
 				if(m_resourceManager.includeUI)
 					createUI();
@@ -120,7 +121,7 @@ package
 			
 			
 			cLabel = new Label(window, 5, 45,"Diffuse Color");
-			colorChooser = new ColorChooser( window, 5, 65, 0xFFFFFF, function(_e:Event):void{
+			colorChooser = new ColorChooser( window, 5, 65, 0xBD7589, function(_e:Event):void{
 				MaterialDiffuseFill(m_sceneObject.material).color =  colorChooser.value;
 			});
 			colorChooser.usePopup = true;

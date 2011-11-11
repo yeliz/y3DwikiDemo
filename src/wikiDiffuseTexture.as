@@ -80,6 +80,7 @@ package
 				scene.addChild(m_resourceManager.getPlane());
 				scene.addChild(m_sceneObject);
 				scene.addChild(m_resourceManager.getStaticObj());
+				scene.addChild(m_resourceManager.getAO());
 				
 				if(m_resourceManager.includeUI)
 					createUI();
@@ -109,7 +110,7 @@ package
 			
 			new Y3DStyle();
 			
-			window = new Window(this,  m_resourceManager.windowX, m_resourceManager.windowY,"DiffuseFill Properties");
+			window = new Window(this,  m_resourceManager.windowX, m_resourceManager.windowY,"DiffuseTexture Properties");
 			window.width = m_resourceManager.width;
 			window.height = m_resourceManager.height;
 			window.mouseEnabled = true;

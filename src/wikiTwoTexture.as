@@ -57,11 +57,12 @@ package
 				
 				m_sceneObject 				= m_resourceManager.getObject();
 				
-				m_sceneObject.material = new MaterialTwoTextureFresnel(getMap("colorMap"),getMap("colorMap2"),0.2, 2, 0.5);
+				m_sceneObject.material = new MaterialTwoTextureFresnel(getMap("colorMap"),getMap("colorMap2"),0.2, 2, 0.3);
 				
 				scene.addChild(m_resourceManager.getPlane());
 				scene.addChild(m_sceneObject);
 				scene.addChild(m_resourceManager.getStaticObj());
+				scene.addChild(m_resourceManager.getAO());
 				
 				if(m_resourceManager.includeUI)
 					createUI();

@@ -59,11 +59,12 @@ package
 				
 				m_sceneObject 				= m_resourceManager.getObject();
 				
-				m_sceneObject.material = new MaterialToon(0x99CCFF);
+				m_sceneObject.material = new MaterialToon(0xFF3500);
 				
 				scene.addChild(m_resourceManager.getPlane());
 				scene.addChild(m_sceneObject);
 				scene.addChild(m_resourceManager.getStaticObj());
+				scene.addChild(m_resourceManager.getAO());
 				
 				if(m_resourceManager.includeUI)
 					createUI();
@@ -131,7 +132,7 @@ package
 			tLabel.text =  "Thickness: "+ thickenessSlider.value;
 		
 			c1Label = new Label(window, 5, 75,"Toon Color");
-			colorChooser = new ColorChooser( window, 5, 90, 0x99CCFF, function(_e:Event):void{
+			colorChooser = new ColorChooser( window, 5, 90, 0xFF3500, function(_e:Event):void{
 				MaterialToon(m_sceneObject.material).color =  colorChooser.value;
 			});
 			colorChooser.usePopup = true;

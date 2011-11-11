@@ -59,11 +59,14 @@ package
 				
 				m_sceneObject 				=  m_resourceManager.getObject();
 				
-				m_sceneObject.material =  new MaterialSpecularFill(0xFFFFFF);
+				m_sceneObject.material =  new MaterialSpecularFill(0xFC7D49);
+				//m_sceneObject.material.ambientColor.a = 1.0;
+				(m_sceneObject.material as MaterialSpecularFill).shininess = 10;
 				
 				scene.addChild(m_resourceManager.getPlane());
 				scene.addChild(m_sceneObject);
 				scene.addChild(m_resourceManager.getStaticObj());
+				scene.addChild(m_resourceManager.getAO());
 				
 				if(m_resourceManager.includeUI)
 					createUI();
@@ -115,7 +118,7 @@ package
 			
 			
 			var c1Label:Label = new Label(window, 5, 45,"Color");
-			colorChooser = new ColorChooser( window, 5, 60, 0xFFFFFF, function(_e:Event):void{
+			colorChooser = new ColorChooser( window, 5, 60, 0xFC7D49, function(_e:Event):void{
 				MaterialSpecularFill(m_sceneObject.material).color =  colorChooser.value;
 			});
 			colorChooser.usePopup = true;

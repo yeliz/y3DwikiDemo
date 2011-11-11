@@ -8,6 +8,7 @@ package
 	import com.yogurt3d.Yogurt3D;
 	import com.yogurt3d.core.lights.RenderableLight;
 	import com.yogurt3d.core.materials.MaterialEnvMapFresnel;
+	import com.yogurt3d.core.materials.base.Color;
 	import com.yogurt3d.core.sceneobjects.SceneObjectRenderable;
 	import com.yogurt3d.core.texture.TextureMap;
 	import com.yogurt3d.io.managers.loadmanagers.LoadManager;
@@ -61,10 +62,12 @@ package
 				
 				m_sceneObject.material = new MaterialEnvMapFresnel(m_resourceManager.envMap,null,
 					null,null,0.3,2, 1, 1);
+				m_sceneObject.material.ambientColor = new Color(0.90, 0.24, 0.36, 0.7);
 				
 				scene.addChild(m_resourceManager.getPlane());
 				scene.addChild(m_sceneObject);
 				scene.addChild(m_resourceManager.getStaticObj());
+				scene.addChild(m_resourceManager.getAO());
 				
 				if(m_resourceManager.includeUI)
 					createUI();

@@ -59,10 +59,11 @@ package
 				m_sceneObject 				=  m_resourceManager.getObject();
 				
 				m_sceneObject.material = new MaterialEnvMapDiffuseTexture(m_resourceManager.envMap, getMap("colorMap"),null,null,0.3);
-				
+				m_sceneObject.material.ambientColor.a = 0.5;
 				scene.addChild(m_resourceManager.getPlane());
 				scene.addChild(m_sceneObject);
 				scene.addChild(m_resourceManager.getStaticObj());
+				scene.addChild(m_resourceManager.getAO());
 			
 				
 				if(m_resourceManager.includeUI)

@@ -63,11 +63,12 @@ package
 				m_sceneObject 				= m_resourceManager.getObject();
 				
 				m_sceneObject.material = new MaterialRefraction(m_resourceManager.envMap,0xFFFFFF, 
-					0.84, null, null, 1.0, true, 0.1, 2);
+					0.74, null, null, 1.0, true, 0.1, 2);
 				
 				scene.addChild(m_resourceManager.getPlane());
 				scene.addChild(m_sceneObject);
 				scene.addChild(m_resourceManager.getStaticObj());
+				scene.addChild(m_resourceManager.getAO());
 				
 				CameraController.moveRatio = m_resourceManager.moveRatio;
 				createLights();

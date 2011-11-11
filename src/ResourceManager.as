@@ -35,6 +35,7 @@ package
 	import skybox.Desert2SkyBox;
 	import skybox.LakeSkyBox;
 	import skybox.NightSkyBox;
+	import skybox.Park2SkyBox;
 
 	public class ResourceManager
 	{
@@ -45,10 +46,12 @@ package
 		private var m_obj						:String;
 		private var m_staticPath				:String;
 		private var m_planePath					:String;
+		private var m_aopath					:String;
 		private var m_envMap					:CubeTextureMap;
 		private var m_static					:SceneObjectRenderable;
 		private var m_plane						:SceneObjectRenderable;
 		private var m_sceneObject				:SceneObjectRenderable;
+		private var m_aoObject					:SceneObjectRenderable;
 		private var m_light						:RenderableLight;
 		private var m_sceneColor				:Color;
 		public var windowX						:Number = 0;
@@ -69,11 +72,14 @@ package
 			m_imageDict["colorMap2"] 		= "../resources/models/Images/mat_color_3.png";
 			
 			m_imageDict["colorMapStatic"] 	= "../resources/models/Images/stat_color.jpg";
-			m_imageDict["plane"] 	= "../resources/skybox/new/grid.jpg";
+			m_imageDict["plane"] 	= "../resources/skybox/new/yeliz.jpg";
+			m_imageDict["aoPlane"] 	= "../resources/skybox/new/ao_plane.png";
 			
 			m_obj = "../resources/models/mat.y3d";
 			m_staticPath = "../resources/models/stat.y3d";
-			m_planePath = "../resources/skybox/new/grid_mesh.y3d";
+			m_planePath = "../resources/skybox/new/grid_meshnew.y3d";
+			
+			m_aopath = "../resources/skybox/new/ao_plane.y3d";
 			
 			m_envMap = new Desert2SkyBox().texture;
 			m_sceneColor = new Color(1,1,1,1);
@@ -135,6 +141,7 @@ package
 			m_static.material = new MaterialDiffuseTexture(getMap("colorMapStatic"));
 			m_static.material.ambientColor.a = 0.2;
 			m_static.transformation.y = -0.3;
+			m_static.renderLayer = 101;
 			if(!includeUI)
 				m_static.transformation.x = 0.2;
 			//m_static.transformation.x = 0.5;
@@ -145,10 +152,24 @@ package
 			m_plane.geometry 	= m_loader.getLoadedContent(m_planePath);
 			m_plane.material = new MaterialTexture(getMap("plane"));
 		//	m_plane.material.ambientColor.a = 0.2;
-			m_plane.transformation.scaleZ = 2.0;
-			m_plane.transformation.y = -0.4;
+			m_plane.transformation.scale = 2.0;
+			m_plane.transformation.y = -0.3;
 			m_plane.transformation.z = -1.9;
 			return m_plane;
+		}
+		public function getAO():SceneObjectRenderable{
+			m_aoObject = new SceneObjectRenderable();
+			m_aoObject.geometry 	= m_loader.getLoadedContent(m_aopath);
+			m_aoObject.material = new MaterialTexture(getMap("aoPlane"));
+			m_aoObject.material.opacity = 0.4;
+			//(m_aoObject.material as MaterialTexture).alphaTexture = true;
+		//	(m_aoObject.material as MaterialTexture).doubleSided = true;
+		//	(m_aoObject.material as MaterialTexture).
+			m_aoObject.transformation.y = -0.3;
+			if(!includeUI)
+				m_aoObject.transformation.x = 0.2;
+		
+			return m_aoObject;
 		}
 		
 		
@@ -352,6 +373,7 @@ package
 			m_loader.add(m_obj, DataLoader, Y3D_Parser, {dataFormat: URLLoaderDataFormat.BINARY}  );
 			m_loader.add(m_staticPath, DataLoader, Y3D_Parser, {dataFormat: URLLoaderDataFormat.BINARY}  );
 			m_loader.add(m_planePath, DataLoader, Y3D_Parser, {dataFormat: URLLoaderDataFormat.BINARY}  );
+			m_loader.add(m_aopath, DataLoader, Y3D_Parser, {dataFormat: URLLoaderDataFormat.BINARY}  );
 			
 		}
 	}

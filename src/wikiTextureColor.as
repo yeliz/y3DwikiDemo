@@ -59,11 +59,12 @@ package
 				
 				m_sceneObject 				= m_resourceManager.getObject();
 				
-				m_sceneObject.material = new MaterialTextureColorFresnel(getMap("colorMap"),0xFF57FF, getMap("normalMap"), 0.01, 0.31, 2);
+				m_sceneObject.material = new MaterialTextureColorFresnel(getMap("colorMap"),0xCF423C, getMap("normalMap"), 0.01, 0.31, 2);
 				
 				scene.addChild(m_resourceManager.getPlane());
 				scene.addChild(m_sceneObject);
 				scene.addChild(m_resourceManager.getStaticObj());
+				scene.addChild(m_resourceManager.getAO());
 				
 				if(m_resourceManager.includeUI)
 					createUI();
@@ -171,7 +172,7 @@ package
 			gainLabel.text = "Gain: "+ gainSlider.value;
 			
 			c1Label = new Label(window, 5, 130,"Color");
-			colorChooser = new ColorChooser( window, 5, 145, 0xFF57FF, function(_e:Event):void{
+			colorChooser = new ColorChooser( window, 5, 145, 0xCF423C, function(_e:Event):void{
 				MaterialTextureColorFresnel(m_sceneObject.material).color =  colorChooser.value;
 			});
 			colorChooser.usePopup = true;

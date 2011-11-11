@@ -7,22 +7,22 @@ package skybox
 	
 	public class Desert2SkyBox extends SkyBox
 	{
-		[Embed(source="../resources/skybox/new/left.jpg")]
+		[Embed(source="../resources/skybox/new/sb1_left.jpg")]
 		private var embednegativeX:Class;
 		
-		[Embed(source="../resources/skybox/new/right.jpg")]
+		[Embed(source="../resources/skybox/new/sb1_right.jpg")]
 		private var embedpositiveX:Class;
 		
-		[Embed(source="../resources/skybox/new/grid.jpg")]
+		[Embed(source="../resources/skybox/new/sb1_bottom.jpg")]
 		private var embednegativeY:Class;
 		
-		[Embed(source="../resources/skybox/new/up.jpg")]
+		[Embed(source="../resources/skybox/new/sb1_top.jpg")]
 		private var embedpositiveY:Class;
 		
-		[Embed(source="../resources/skybox/new/front.jpg")]
+		[Embed(source="../resources/skybox/new/sb1_front.jpg")]
 		private var embedpositiveZ:Class;
 		
-		[Embed(source="../resources/skybox/new/back.jpg")]
+		[Embed(source="../resources/skybox/new/sb1_back.jpg")]
 		private var embednegativeZ:Class;
 		
 		

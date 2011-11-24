@@ -26,8 +26,9 @@ package com.yogurt3d.test
 		private var 	m_viewport	:Sprite;
 		protected var 	m_textField	:TextField;
 		private var 	m_context		:Context;
+		private var 	m_loader:LoaderGUI;
 		
-		private var m_timeInfo:TimeInfo;
+		private var 	m_timeInfo:TimeInfo;
 		
 		public function BaseTest()
 		{
@@ -169,8 +170,37 @@ package com.yogurt3d.test
 			
 		}
 		
+		public function setLoaderData( _progress:Number, _text:String ):void{
+			m_loader.width = 500;
+			m_loader.height = 35;
+			m_loader.progress = _progress;
+			m_loader.text = _text;
+		}
 		
+		public function showLoader():void{
+			if( m_loader )
+			{
+				try{
+					this.removeChild( m_loader );
+				}catch(_e:*){
+					
+				}
+			}
+			m_loader = new LoaderGUI();
+			m_loader.width = 500;
+			m_loader.height = 35;
+			m_loader.x = (638 - m_loader.width ) / 2;
+			m_loader.y = (478 - m_loader.height ) / 2;
+			this.addChild( m_loader );
+			m_loader.width = 500;
+			m_loader.height = 35;
+		}
 		
-		
+		public function hideLoader():void{
+			if( m_loader )
+			{
+				this.removeChild( m_loader );
+			}
+		}		
 	}
 }

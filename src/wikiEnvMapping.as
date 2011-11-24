@@ -57,6 +57,14 @@ package
 			m_resourceManager.loadResources();
 			m_loader = m_resourceManager.loader;
 			
+			showLoader();
+			
+			m_loader.addEventListener( LoaderEvent.LOAD_PROGRESS, function( _e:LoaderEvent ):void{
+				var path:String = _e.loader.loadPath;
+				path = path.substr( path.lastIndexOf("/")+1 );
+				setLoaderData( _e.bytesLoaded / _e.bytesTotal * 100, "Loading " + path + " ... \t\t("+Math.round(_e.bytesLoaded/1024)+"KB/"+ Math.round(_e.bytesTotal/1024) +"KB)" );
+			});
+			
 			m_loader.addEventListener( LoaderEvent.ALL_COMPLETE, function( _e:LoaderEvent ):void
 			{
 				if(m_resourceManager.includeUI)
@@ -82,6 +90,8 @@ package
 				
 				
 				Yogurt3D.instance.startAutoUpdate();
+				
+				hideLoader();
 				
 			});
 			m_loader.start();

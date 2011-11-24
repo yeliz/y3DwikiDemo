@@ -1,5 +1,6 @@
 package
 {
+	import com.bit101.components.CheckBox;
 	import com.bit101.components.ColorChooser;
 	import com.bit101.components.HSlider;
 	import com.bit101.components.Label;
@@ -51,6 +52,14 @@ package
 			m_resourceManager.loadResources();
 			m_loader = m_resourceManager.loader;
 			
+			showLoader();
+			
+			m_loader.addEventListener( LoaderEvent.LOAD_PROGRESS, function( _e:LoaderEvent ):void{
+				var path:String = _e.loader.loadPath;
+				path = path.substr( path.lastIndexOf("/")+1 );
+				setLoaderData( _e.bytesLoaded / _e.bytesTotal * 100, "Loading " + path + " ... \t\t("+Math.round(_e.bytesLoaded/1024)+"KB/"+ Math.round(_e.bytesTotal/1024) +"KB)" );
+			});
+			
 			m_loader.addEventListener( LoaderEvent.ALL_COMPLETE, function( _e:LoaderEvent ):void
 			{
 				
@@ -78,6 +87,8 @@ package
 				m_resourceManager.setDefaultCamera(camera);
 				
 				Yogurt3D.instance.startAutoUpdate();
+				
+				hideLoader();
 				
 			});
 			m_loader.start();
@@ -125,6 +136,14 @@ package
 				MaterialDiffuseFill(m_sceneObject.material).color =  colorChooser.value;
 			});
 			colorChooser.usePopup = true;
+			
+			var normal:CheckBox = new CheckBox(window,5, 85, "normalMap",function(_e:Event):void{
+				if(normal.selected)
+					MaterialDiffuseFill(m_sceneObject.material).normalMap =  getMap("normalMap");
+				else
+					MaterialDiffuseFill(m_sceneObject.material).normalMap = null;
+			});
+			normal.selected = false;
 			
 			window3 = m_resourceManager.getMaterialDiffuseUI(this.scene, this, m_sceneObject.material);
 			window3.addEventListener(MouseEvent.CLICK, onWindowSelect);

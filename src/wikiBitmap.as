@@ -3,6 +3,7 @@ package
 	import com.yogurt3d.Yogurt3D;
 	import com.yogurt3d.core.lights.RenderableLight;
 	import com.yogurt3d.core.materials.MaterialBitmap;
+	import com.yogurt3d.core.materials.MaterialTexture;
 	import com.yogurt3d.core.sceneobjects.SceneObjectRenderable;
 	import com.yogurt3d.core.texture.TextureMap;
 	import com.yogurt3d.io.managers.loadmanagers.LoadManager;
@@ -50,15 +51,20 @@ package
 			m_resourceManager.loadResources();
 			m_loader = m_resourceManager.loader;
 			
+			showLoader();
+			
+			m_loader.addEventListener( LoaderEvent.LOAD_PROGRESS, function( _e:LoaderEvent ):void{
+				var path:String = _e.loader.loadPath;
+				path = path.substr( path.lastIndexOf("/")+1 );
+				setLoaderData( _e.bytesLoaded / _e.bytesTotal * 100, "Loading " + path + " ... \t\t("+Math.round(_e.bytesLoaded/1024)+"KB/"+ Math.round(_e.bytesTotal/1024) +"KB)" );
+			});
+			
 			m_loader.addEventListener( LoaderEvent.ALL_COMPLETE, function( _e:LoaderEvent ):void
 			{
-				//createUI();
-				
-				//scene.skyBox = new NightSkyBox;
 				scene.sceneColor = m_resourceManager.sceneColor;
 				
 				m_sceneObject 				= m_resourceManager.getObject();
-				m_sceneObject.material 		= new MaterialBitmap(getMap("colorMap").bitmapData);
+				m_sceneObject.material 		= new MaterialTexture(getMap("colorMap"), true);
 				
 				
 				scene.addChild(m_resourceManager.getPlane());
@@ -73,6 +79,8 @@ package
 				m_resourceManager.setDefaultCamera(camera);
 				
 				Yogurt3D.instance.startAutoUpdate();
+				
+				hideLoader();
 				
 			});
 			m_loader.start();

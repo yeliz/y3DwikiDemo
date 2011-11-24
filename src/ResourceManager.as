@@ -10,6 +10,7 @@ package
 	import com.yogurt3d.core.geoms.Mesh;
 	import com.yogurt3d.core.lights.ELightType;
 	import com.yogurt3d.core.lights.RenderableLight;
+	import com.yogurt3d.core.materials.MaterialBitmap;
 	import com.yogurt3d.core.materials.MaterialDiffuseFill;
 	import com.yogurt3d.core.materials.MaterialDiffuseTexture;
 	import com.yogurt3d.core.materials.MaterialTexture;
@@ -64,15 +65,15 @@ package
 		public function ResourceManager()
 		{
 			m_imageDict = new Dictionary();
-			m_imageDict["colorMap"] 		= "../resources/models/Images/mat_color_1.png";
-			m_imageDict["glossMap"] 		= "../resources/models/Images/gloss_map_01.jpg";
-			m_imageDict["reflectionMap"] 	= "../resources/models/Images/mat_reflect_1.png";
-			m_imageDict["normalMap"] 		= "../resources/models/Images/mat_normal_1.jpg";
-			m_imageDict["specularMap"] 		= "../resources/models/Images/mat_spec_grayscale.png";
-			m_imageDict["colorMap2"] 		= "../resources/models/Images/mat_color_3.png";
-			
-			m_imageDict["colorMapStatic"] 	= "../resources/models/Images/stat_color.jpg";
-			m_imageDict["plane"] 	= "../resources/skybox/new/yeliz.jpg";
+			m_imageDict["colorMap"] 		= "../resources/models/Images/mat_color_1.atf";
+			m_imageDict["glossMap"] 		= "../resources/models/Images/gloss_map_01.atf";
+			m_imageDict["reflectionMap"] 	= "../resources/models/Images/mat_reflect_1.atf";
+			m_imageDict["normalMap"] 		= "../resources/models/Images/mat_normal_1.atf";
+			m_imageDict["specularMap"] 		= "../resources/models/Images/mat_spec_grayscale.atf";
+			m_imageDict["colorMap2"] 		= "../resources/models/Images/mat_color_3.atf";
+//			
+			m_imageDict["colorMapStatic"] 	= "../resources/models/Images/stat_color.atf";
+			m_imageDict["plane"] 	= "../resources/skybox/new/yelizMipmap.atf";
 			m_imageDict["aoPlane"] 	= "../resources/skybox/new/ao_plane.png";
 			
 			m_obj = "../resources/models/mat.y3d";
@@ -83,6 +84,25 @@ package
 			
 			m_envMap = new Desert2SkyBox().texture;
 			m_sceneColor = new Color(1,1,1,1);
+			
+		}
+		
+		public function loadResources():void{
+			
+			m_loader = new LoadManager();
+			
+			for (var key:Object in m_imageDict) {
+				if(String(m_imageDict[key]).indexOf(".atf") != -1){
+					m_loader.add( m_imageDict[key], DataLoader, TextureMap_Parser, {dataFormat: URLLoaderDataFormat.BINARY}  );
+				}else{
+					m_loader.add( m_imageDict[key], DisplayObjectLoader, TextureMap_Parser, null, true );
+				}			
+			}
+			
+			m_loader.add(m_obj, DataLoader, Y3D_Parser, {dataFormat: URLLoaderDataFormat.BINARY}  );
+			m_loader.add(m_staticPath, DataLoader, Y3D_Parser, {dataFormat: URLLoaderDataFormat.BINARY}  );
+			m_loader.add(m_planePath, DataLoader, Y3D_Parser, {dataFormat: URLLoaderDataFormat.BINARY}  );
+			m_loader.add(m_aopath, DataLoader, Y3D_Parser, {dataFormat: URLLoaderDataFormat.BINARY}  );
 			
 		}
 		
@@ -138,8 +158,8 @@ package
 		public function getStaticObj():SceneObjectRenderable{
 			m_static = new SceneObjectRenderable();
 			m_static.geometry 	= m_loader.getLoadedContent(m_staticPath);
-			m_static.material = new MaterialDiffuseTexture(getMap("colorMapStatic"));
-			m_static.material.ambientColor.a = 0.2;
+			m_static.material = new MaterialDiffuseTexture(getMap("colorMapStatic"), 1.0);
+			m_static.material.ambientColor.a = 0.4;
 			m_static.transformation.y = -0.3;
 			m_static.renderLayer = 101;
 			if(!includeUI)
@@ -151,7 +171,6 @@ package
 			m_plane = new SceneObjectRenderable();
 			m_plane.geometry 	= m_loader.getLoadedContent(m_planePath);
 			m_plane.material = new MaterialTexture(getMap("plane"));
-		//	m_plane.material.ambientColor.a = 0.2;
 			m_plane.transformation.scale = 2.0;
 			m_plane.transformation.y = -0.3;
 			m_plane.transformation.z = -1.9;
@@ -162,9 +181,6 @@ package
 			m_aoObject.geometry 	= m_loader.getLoadedContent(m_aopath);
 			m_aoObject.material = new MaterialTexture(getMap("aoPlane"));
 			m_aoObject.material.opacity = 0.4;
-			//(m_aoObject.material as MaterialTexture).alphaTexture = true;
-		//	(m_aoObject.material as MaterialTexture).doubleSided = true;
-		//	(m_aoObject.material as MaterialTexture).
 			m_aoObject.transformation.y = -0.3;
 			if(!includeUI)
 				m_aoObject.transformation.x = 0.2;
@@ -208,7 +224,7 @@ package
 			colorChooser3.usePopup = true;
 			
 			var label5:Label = new Label(window2,5,60,"DiffuseIntensity:"+ material.diffuseColor.a);
-			var slider2:Slider = new Slider( "horizontal", window2, 5, 75, function():void{
+			slider2 = new Slider( "horizontal", window2, 5, 75, function():void{
 				material.diffuseColor.a = slider2.value;
 				label5.text = "DiffuseIntensity:" + slider2.value;
 			});
@@ -223,7 +239,7 @@ package
 			colorChooser4.usePopup = true;
 			
 			var label6:Label = new Label(window2,5,105,"SpecularIntensity:"+ material.specularColor.a);
-			var slider3:Slider = new Slider( "horizontal", window2, 5, 120, function():void{
+			slider3 = new Slider( "horizontal", window2, 5, 120, function():void{
 				material.specularColor.a = slider3.value;
 				label6.text = "SpecularIntensity:" + slider3.value;
 			});
@@ -270,7 +286,7 @@ package
 			colorChooser3.usePopup = true;
 			
 			var label5:Label = new Label(window2,5,90,"DiffuseIntensity:"+ material.diffuseColor.a);
-			var slider2:Slider = new Slider( "horizontal", window2, 5, 105, function():void{
+			slider2 = new Slider( "horizontal", window2, 5, 105, function():void{
 				material.diffuseColor.a = slider2.value;
 				label5.text = "DiffuseIntensity:" + slider2.value;
 			});
@@ -362,19 +378,6 @@ package
 		}
 		
 		
-		public function loadResources():void{
 		
-			m_loader = new LoadManager();
-			
-			for (var key:Object in m_imageDict) {
-				m_loader.add( m_imageDict[key], DisplayObjectLoader, TextureMap_Parser );
-			}
-			
-			m_loader.add(m_obj, DataLoader, Y3D_Parser, {dataFormat: URLLoaderDataFormat.BINARY}  );
-			m_loader.add(m_staticPath, DataLoader, Y3D_Parser, {dataFormat: URLLoaderDataFormat.BINARY}  );
-			m_loader.add(m_planePath, DataLoader, Y3D_Parser, {dataFormat: URLLoaderDataFormat.BINARY}  );
-			m_loader.add(m_aopath, DataLoader, Y3D_Parser, {dataFormat: URLLoaderDataFormat.BINARY}  );
-			
-		}
 	}
 }

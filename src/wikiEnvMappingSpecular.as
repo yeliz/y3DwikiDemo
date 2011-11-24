@@ -53,6 +53,14 @@ package
 			m_resourceManager.loadResources();
 			m_loader = m_resourceManager.loader;
 			
+			showLoader();
+			
+			m_loader.addEventListener( LoaderEvent.LOAD_PROGRESS, function( _e:LoaderEvent ):void{
+				var path:String = _e.loader.loadPath;
+				path = path.substr( path.lastIndexOf("/")+1 );
+				setLoaderData( _e.bytesLoaded / _e.bytesTotal * 100, "Loading " + path + " ... \t\t("+Math.round(_e.bytesLoaded/1024)+"KB/"+ Math.round(_e.bytesTotal/1024) +"KB)" );
+			});
+			
 			m_loader.addEventListener( LoaderEvent.ALL_COMPLETE, function( _e:LoaderEvent ):void
 			{
 				
@@ -65,7 +73,7 @@ package
 				m_sceneObject.material = new MaterialEnvMappingSpecular(
 					m_resourceManager.envMap,getMap("colorMap"),
 					getMap("normalMap"),
-					getMap("specularMap"),null,0.43);
+					getMap("specularMap"),null,0.43,1.0,true);
 				
 				(m_sceneObject.material as MaterialEnvMappingSpecular).shininess = 0;
 				
@@ -91,9 +99,9 @@ package
 				setupTargetCamera();
 				
 				m_resourceManager.setDefaultCamera(camera);
-				
-				
 				Yogurt3D.instance.startAutoUpdate();
+				
+				hideLoader();
 				
 			});
 			m_loader.start();
@@ -142,9 +150,18 @@ package
 					MaterialEnvMappingSpecular(m_sceneObject.material).reflectivityMap = null;
 				}
 			});
+
+			var specular:CheckBox = new CheckBox(window, 5, 35, "Specular map",function(_e:Event):void{
+				if(MaterialEnvMappingSpecular(m_sceneObject.material).specularMap == null){
+					MaterialEnvMappingSpecular(m_sceneObject.material).specularMap = getMap("specularMap");
+				}else{
+					MaterialEnvMappingSpecular(m_sceneObject.material).specularMap = null;
+				}
+			});
+			specular.selected = true;
 			
-			var alphaLabel:Label = new Label(window, 5, 35,"Opacity:"+m_sceneObject.material.opacity);
-			alphaSlider = new HSlider(window, 5, 50, function(_e:Event):void{
+			var alphaLabel:Label = new Label(window, 5, 50,"Opacity:"+m_sceneObject.material.opacity);
+			alphaSlider = new HSlider(window, 5, 65, function(_e:Event):void{
 				MaterialEnvMappingSpecular(m_sceneObject.material).opacity = alphaSlider.value;
 				alphaLabel.text = "Opacity: "+ alphaSlider.value;
 			});
@@ -152,8 +169,8 @@ package
 			alphaSlider.minimum = 0;
 			alphaSlider.value = m_sceneObject.material.opacity;
 			
-			var alphaLab:Label = new Label(window, 5, 70,"Env Alpha:"+MaterialEnvMappingSpecular(m_sceneObject.material).alpha);
-			var aSlider:HSlider = new HSlider(window, 5, 85, function(_e:Event):void{
+			var alphaLab:Label = new Label(window, 5, 80,"Env Alpha:"+MaterialEnvMappingSpecular(m_sceneObject.material).alpha);
+			var aSlider:HSlider = new HSlider(window, 5, 95, function(_e:Event):void{
 				MaterialEnvMappingSpecular(m_sceneObject.material).alpha = aSlider.value;
 				alphaLab.text = "Env Alpha: "+ aSlider.value;
 			});
@@ -161,8 +178,8 @@ package
 			aSlider.minimum = 0;
 			aSlider.value = MaterialEnvMappingSpecular(m_sceneObject.material).alpha;
 			
-			new Label(window,5,100,"Shininess");
-			var slider4:Slider = new Slider( "horizontal", window, 5, 120, function():void{
+			new Label(window,5,110,"Shininess");
+			var slider4:Slider = new Slider( "horizontal", window, 5, 125, function():void{
 				MaterialEnvMappingSpecular(m_sceneObject.material).shininess= slider4.value;
 			});
 			slider4.value = MaterialEnvMappingSpecular(m_sceneObject.material).shininess;

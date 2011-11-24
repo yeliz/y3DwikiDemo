@@ -5,7 +5,6 @@ package
 	import com.bit101.components.HSlider;
 	import com.bit101.components.Label;
 	import com.bit101.components.Slider;
-	import com.bit101.components.Style;
 	import com.bit101.components.Window;
 	import com.yogurt3d.Yogurt3D;
 	import com.yogurt3d.core.lights.RenderableLight;
@@ -17,13 +16,8 @@ package
 	import com.yogurt3d.test.BaseTest;
 	import com.yogurt3d.test.CameraController;
 	
-	import flash.display.Bitmap;
-	import flash.display.BitmapData;
-	import flash.display.BlendMode;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	
-	import net.hires.debug.Stats;
 	
 	import skybox.*;
 	
@@ -59,9 +53,16 @@ package
 			m_resourceManager.loadResources();
 			m_loader = m_resourceManager.loader;
 			
+			showLoader();
+			
+			m_loader.addEventListener( LoaderEvent.LOAD_PROGRESS, function( _e:LoaderEvent ):void{
+				var path:String = _e.loader.loadPath;
+				path = path.substr( path.lastIndexOf("/")+1 );
+				setLoaderData( _e.bytesLoaded / _e.bytesTotal * 100, "Loading " + path + " ... \t\t("+Math.round(_e.bytesLoaded/1024)+"KB/"+ Math.round(_e.bytesTotal/1024) +"KB)" );
+			});
+			
 			m_loader.addEventListener( LoaderEvent.ALL_COMPLETE, function( _e:LoaderEvent ):void
 			{
-				//scene.skyBox = new NightSkyBox;
 				scene.sceneColor = m_resourceManager.sceneColor;
 				
 				m_sceneObject 				= m_resourceManager.getObject();
@@ -89,6 +90,8 @@ package
 				
 				
 				Yogurt3D.instance.startAutoUpdate();
+				
+				hideLoader();
 				
 			});
 			m_loader.start();
@@ -132,12 +135,13 @@ package
 			});
 			normalCheckBox.selected = true;
 			
-			reflectivityCheckBox = new CheckBox(window, 5, 20, "Reflectivity map",function(_e:Event):void{
-				if(MaterialEnvMapFresnelSpecularTexture(m_sceneObject.material).reflectivityMap == null)
-					MaterialEnvMapFresnelSpecularTexture(m_sceneObject.material).reflectivityMap = getMap("reflectionMap");
+			var specMap:CheckBox = new CheckBox(window, 5, 20, "Specular map",function(_e:Event):void{
+				if(MaterialEnvMapFresnelSpecularTexture(m_sceneObject.material).specularMap == null)
+					MaterialEnvMapFresnelSpecularTexture(m_sceneObject.material).specularMap = getMap("specularMap");
 				else
-					MaterialEnvMapFresnelSpecularTexture(m_sceneObject.material).reflectivityMap = null;
+					MaterialEnvMapFresnelSpecularTexture(m_sceneObject.material).specularMap = null;
 			});
+			specMap.selected = true;
 			
 			var oLab:Label = new Label(window, 5, 35,"Opacity: 1");
 			alphaSlider = new HSlider(window, 5, 50, function(_e:Event):void{
@@ -165,13 +169,14 @@ package
 				frPow.text = "Fresnel Power: "+ fresnelY.value;
 			});			
 			fresnelY.maximum = 7;
-			fresnelY.minimum = 0;
+			fresnelY.minimum = 1;
+			fresnelY.tick = 1;
 			fresnelY.value = MaterialEnvMapFresnelSpecularTexture(m_sceneObject.material).fresnelPower;
 			
 			frPow.text = "Fresnel Power: "+ fresnelY.value;
 			
-			new Label(window,5,130,"Shininess");
-			var slider4:Slider = new Slider( "horizontal", window, 5, 145, function():void{
+			new Label(window,5,125,"Shininess");
+			var slider4:Slider = new Slider( "horizontal", window, 5, 140, function():void{
 				MaterialEnvMapFresnelSpecularTexture(m_sceneObject.material).shininess= slider4.value;
 			});
 			slider4.value = MaterialEnvMapFresnelSpecularTexture(m_sceneObject.material).shininess;

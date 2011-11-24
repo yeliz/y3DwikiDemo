@@ -53,6 +53,14 @@ package
 			m_resourceManager.loadResources();
 			m_loader = m_resourceManager.loader;
 			
+			showLoader();
+			
+			m_loader.addEventListener( LoaderEvent.LOAD_PROGRESS, function( _e:LoaderEvent ):void{
+				var path:String = _e.loader.loadPath;
+				path = path.substr( path.lastIndexOf("/")+1 );
+				setLoaderData( _e.bytesLoaded / _e.bytesTotal * 100, "Loading " + path + " ... \t\t("+Math.round(_e.bytesLoaded/1024)+"KB/"+ Math.round(_e.bytesTotal/1024) +"KB)" );
+			});
+			
 			m_loader.addEventListener( LoaderEvent.ALL_COMPLETE, function( _e:LoaderEvent ):void
 			{
 				//scene.skyBox = new NightSkyBox;
@@ -80,6 +88,7 @@ package
 				
 				
 				Yogurt3D.instance.startAutoUpdate();
+				hideLoader();
 				
 			});
 			m_loader.start();
@@ -156,7 +165,8 @@ package
 				frPow.text = "Fresnel Power: "+ fresnelY.value;
 			});			
 			fresnelY.maximum = 7;
-			fresnelY.minimum = 0;
+			fresnelY.minimum = 1;
+			fresnelY.tick = 1;
 			fresnelY.value = MaterialEnvMapFresnel(m_sceneObject.material).fresnelPower;
 			
 			frPow.text = "Fresnel Power: "+ fresnelY.value;

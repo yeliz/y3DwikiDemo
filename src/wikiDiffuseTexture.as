@@ -58,10 +58,16 @@ package
 			m_resourceManager.loadResources();
 			m_loader = m_resourceManager.loader;
 			
+			showLoader();
+			
+			m_loader.addEventListener( LoaderEvent.LOAD_PROGRESS, function( _e:LoaderEvent ):void{
+				var path:String = _e.loader.loadPath;
+				path = path.substr( path.lastIndexOf("/")+1 );
+				setLoaderData( _e.bytesLoaded / _e.bytesTotal * 100, "Loading " + path + " ... \t\t("+Math.round(_e.bytesLoaded/1024)+"KB/"+ Math.round(_e.bytesTotal/1024) +"KB)" );
+			});
+			
 			m_loader.addEventListener( LoaderEvent.ALL_COMPLETE, function( _e:LoaderEvent ):void
 			{
-			
-				//scene.skyBox = new NightSkyBox;
 				scene.sceneColor = m_resourceManager.sceneColor;
 				
 				m_sceneObject 				= m_resourceManager.getObject();
@@ -74,9 +80,7 @@ package
 				
 				m_sceneObject.material.ambientColor.setColorUint(0xF55E00);
 				m_sceneObject.material.ambientColor.a = 1.0;
-				
 			
-				
 				scene.addChild(m_resourceManager.getPlane());
 				scene.addChild(m_sceneObject);
 				scene.addChild(m_resourceManager.getStaticObj());
@@ -92,6 +96,8 @@ package
 				m_resourceManager.setDefaultCamera(camera);
 				
 				Yogurt3D.instance.startAutoUpdate();
+				
+				hideLoader();
 				
 			});
 			m_loader.start();
@@ -144,16 +150,10 @@ package
 			window3.addEventListener(MouseEvent.DOUBLE_CLICK, onWindowSelect);
 			window3.addEventListener(MouseEvent.ROLL_OUT, onMouseOut);
 			
-//			m_sceneObject.material.ambientColor.setColorUint(0xFFFF61);
-//			m_sceneObject.material.ambientColor.a = 0.48;
-			
 			window2 = m_resourceManager.getLightUI(this.scene, this);
 			window2.addEventListener(MouseEvent.CLICK, onWindowSelect);
 			window2.addEventListener(MouseEvent.DOUBLE_CLICK, onWindowSelect);
 			window2.addEventListener(MouseEvent.ROLL_OUT, onMouseOut);	
-			
-//			m_sceneObject.material.diffuseColor.setColorUint(0xFFFFB3);
-//			m_sceneObject.material.diffuseColor.a = 0.92;
 		
 		}
 		
